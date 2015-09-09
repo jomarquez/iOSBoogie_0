@@ -34,31 +34,34 @@ class ViewController: UIViewController {
     come before letters -- that's fine). Store all the words as lowercase,
     so 'The' and 'the' count as the same word.
     */
+    
+    
     func findTheDuplicates(fileContents: String) {
+        // convert string to lowercase
+        // create array of words by splitting string on space or newline
+        var wordArr = split(fileContents.lowercaseString) {$0 == " " || $0 == "\n"}
+        
+        // create empty dictionary
+        var wordDic = Dictionary<String, Int>()
 
-        // There are a bunch of ways to do this, but here's one:
-        // let's break down the problem
+        for word in wordArr {
+            // append word to dictionary if key does not exist and give value of 1
+            if (wordDic[word] == nil) {
+               wordDic[word] = 1
+            } else {
+                // add 1 to the value if key exists
+                wordDic[word] = wordDic[word]! + 1
+            }
+        }
         
-        // 1. take the giant string and turn it into individual words
-        // 2. make a dictionary of [words : count]
-        // 3. loop through each word in the giant string
-        // 3. make each word lower case
-        // 4. remove whitespace surrounding each word
-        // 5. add an entry in the dictionary for each word and increment the 'count' each time you see it again in the dictionary
-        // 6. once you're done get an array of all the words in the dictionary (all the keys)
-        // 7. sort the words alphabetically
-        // 8. loop through the array and print out the count for each word
+        // sort the words alphabetically in dictionary
+        let sortedWordDic = sorted(wordDic) { $0.0 < $1.0 }
         
-        // Some useful documentation:
-        // see a stackoverflow for the split method: http://stackoverflow.com/questions/25678373/swift-split-a-string-into-an-array
-        
-        
-        // removing whitespace from a string: http://stackoverflow.com/questions/28570973/how-should-i-remove-all-the-spaces-from-a-string-swift
-        
-        
-        // to sort an array in swift: http://stackoverflow.com/questions/25223058/how-to-sort-an-array-in-swift
-        
-        
+        // iterate through dictionary and print the count for each word
+        for (word, count) in sortedWordDic {
+            println("\(word): \(count)")
+            
+        }
     }
     
 }
